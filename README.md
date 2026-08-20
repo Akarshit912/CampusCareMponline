@@ -4,8 +4,6 @@
 ![ASP.NET Core MVC](https://img.shields.io/badge/ASP.NET_Core-MVC-blue?style=for-the-badge&logo=aspnet)
 ![ASP.NET Core Web API](https://img.shields.io/badge/ASP.NET_Core-Web_API-green?style=for-the-badge&logo=swagger)
 ![EF Core](https://img.shields.io/badge/EF_Core-10.0-violet?style=for-the-badge)
-![xUnit Test Suite](https://img.shields.io/badge/Tests-23_Passing-brightgreen?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)
 
 CampusCare is a production-style academic project built using **C#**, **ASP.NET Core 10.0**, **Entity Framework Core**, **SQL Server / SQLite**, **xUnit**, **AI Rule Triage Engine**, and **n8n Webhook Automation**.
 
