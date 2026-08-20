@@ -1,0 +1,75 @@
+@model IEnumerable<CampusCare.Core.Entities.Department>
+@{
+    ViewData["Title"] = "Department Management";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-building text-primary me-2"></i> Department Management</h2>
+        <p class="text-secondary small mb-0">Configure operational departments & staffing</p>
+    </div>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Console
+    </a>
+</div>
+
+<div class="row g-4">
+    <!-- Department Creation Form -->
+    <div class="col-lg-4">
+        <div class="card card-custom border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0"><i class="bi bi-plus-circle me-2 text-primary"></i> Add Department</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="CreateDepartment" method="post">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Department Name *</label>
+                        <input name="Name" class="form-control" placeholder="e.g. Sports & Facilities" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Department Code *</label>
+                        <input name="Code" class="form-control text-uppercase" placeholder="e.g. SPORTS" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Description</label>
+                        <textarea name="Description" class="form-control" rows="3" placeholder="Brief scope description..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100"><i class="bi bi-plus-lg me-1"></i> Create Department</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Department List Table -->
+    <div class="col-lg-8">
+        <div class="card card-custom border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Code</th>
+                                <th>Department Name</th>
+                                <th>Description</th>
+                                <th>Staff Count</th>
+                                <th>Categories</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var d in Model)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-primary font-monospace">@d.Code</span></td>
+                                    <td class="fw-bold text-dark">@d.Name</td>
+                                    <td class="small text-secondary">@d.Description</td>
+                                    <td><span class="badge bg-info text-dark rounded-pill">@d.StaffMembers.Count staff</span></td>
+                                    <td><span class="badge bg-secondary rounded-pill">@d.Categories.Count categories</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
