@@ -1,0 +1,227 @@
+@model CampusCare.Web.ViewModels.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Analytics Console";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-pie-chart-fill text-danger me-2"></i> System Analytics Console</h2>
+        <p class="text-secondary small mb-0">CampusCare Executive Monitoring, Performance Analytics & Escalation Management</p>
+    </div>
+    <form asp-action="RunEscalationCheck" method="post" class="d-inline">
+        <button type="submit" class="btn btn-outline-danger shadow-sm">
+            <i class="bi bi-alarm-fill me-1"></i> Trigger SLA Escalation Scan
+        </button>
+    </form>
+</div>
+
+<!-- KPI Cards Row -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-2">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <h6 class="text-muted small fw-semibold text-uppercase mb-1">Total Issues</h6>
+            <h3 class="fw-extrabold mb-0">@Model.TotalComplaints</h3>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-2">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <h6 class="text-muted small fw-semibold text-uppercase mb-1">Pending</h6>
+            <h3 class="fw-extrabold mb-0 text-info">@Model.PendingComplaints</h3>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-2">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <h6 class="text-muted small fw-semibold text-uppercase mb-1">In Progress</h6>
+            <h3 class="fw-extrabold mb-0 text-warning">@Model.InProgressComplaints</h3>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-2">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <h6 class="text-muted small fw-semibold text-uppercase mb-1">Escalated</h6>
+            <h3 class="fw-extrabold mb-0 text-danger">@Model.EscalatedComplaints</h3>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-2">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <h6 class="text-muted small fw-semibold text-uppercase mb-1">Avg Resolution</h6>
+            <h3 class="fw-extrabold mb-0 text-primary">@Model.AverageResolutionHours <span class="fs-6 fw-normal">hrs</span></h3>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-2">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <h6 class="text-muted small fw-semibold text-uppercase mb-1">Feedback Index</h6>
+            <h3 class="fw-extrabold mb-0 text-success"><i class="bi bi-star-fill text-warning fs-5"></i> @Model.AverageFeedbackRating <span class="fs-6 fw-normal">/5</span></h3>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Department Distribution Stats -->
+    <div class="col-lg-6">
+        <div class="card card-custom border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0"><i class="bi bi-building me-2 text-primary"></i> Complaints by Department</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    @foreach (var dept in Model.DepartmentStats)
+                    {
+                        int pct = Model.TotalComplaints > 0 ? (int)((double)dept.TotalCount / Model.TotalComplaints * 100) : 0;
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-dark">@dept.DepartmentName</span>
+                                <span class="small text-muted">@dept.TotalCount issues (@dept.ResolvedCount resolved, @dept.EscalatedCount escalated)</span>
+                            </div>
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: @(pct)%;" aria-valuenow="@pct" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Stats -->
+    <div class="col-lg-6">
+        <div class="card card-custom border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0"><i class="bi bi-tags me-2 text-primary"></i> Category Analytics</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach (var cat in Model.CategoryStats)
+                    {
+                        <div class="p-3 bg-light rounded-3 border flex-fill text-center" style="min-width: 130px;">
+                            <h4 class="fw-extrabold text-primary mb-0">@cat.TotalCount</h4>
+                            <span class="small text-secondary fw-semibold">@cat.CategoryName</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Quick Navigation & Filtering -->
+<div class="card card-custom border-0 shadow-sm mb-4">
+    <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <h5 class="fw-bold mb-0"><i class="bi bi-table me-2 text-primary"></i> All System Complaints</h5>
+        <div class="d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#purgeModal">
+                <i class="bi bi-trash3 me-1"></i> Purge Past Records
+            </button>
+            <a asp-action="Users" class="btn btn-sm btn-outline-primary"><i class="bi bi-people me-1"></i> Manage Users</a>
+            <a asp-action="Departments" class="btn btn-sm btn-outline-secondary"><i class="bi bi-building me-1"></i> Departments</a>
+            <a asp-action="Categories" class="btn btn-sm btn-outline-info"><i class="bi bi-tags me-1"></i> Categories</a>
+        </div>
+    </div>
+    <div class="card-body bg-light border-bottom">
+        <form asp-action="Index" method="get" class="row g-2 align-items-center">
+            <div class="col-md-3">
+                <input type="text" name="search" value="@ViewBag.Search" class="form-control form-control-sm" placeholder="Search ID or Title..." />
+            </div>
+            <div class="col-md-3">
+                <select name="departmentId" asp-items="ViewBag.Departments" class="form-select form-select-sm">
+                    <option value="">-- All Departments --</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="categoryId" asp-items="ViewBag.Categories" class="form-select form-select-sm">
+                    <option value="">-- All Categories --</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary-custom btn-sm w-100"><i class="bi bi-search me-1"></i> Filter</button>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-counterclockwise"></i> Reset</a>
+            </div>
+        </form>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Department</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Student</th>
+                        <th>Assigned Staff</th>
+                        <th>Created</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model.RecentComplaints)
+                    {
+                        <tr>
+                            <td><span class="font-monospace fw-bold text-primary">@c.ComplaintNumber</span></td>
+                            <td class="fw-semibold">@c.Title</td>
+                            <td><span class="badge bg-light text-dark border">@(c.Category?.Name ?? "General")</span></td>
+                            <td><span class="small font-weight-bold">@(c.Department?.Name ?? "Pending")</span></td>
+                            <td><span class="badge badge-status badge-@c.Priority">@c.Priority</span></td>
+                            <td>
+                                <span class="badge badge-status badge-@c.Status">@c.Status</span>
+                                @if (c.IsEscalated)
+                                {
+                                    <span class="badge bg-danger ms-1"><i class="bi bi-exclamation-triangle-fill"></i> SLA</span>
+                                }
+                            </td>
+                            <td class="small">@(c.Student?.FullName ?? "Student")</td>
+                            <td class="small">@(c.AssignedStaff?.FullName ?? "Unassigned")</td>
+                            <td class="small text-muted">@c.CreatedAt.ToString("MMM dd, yyyy")</td>
+                            <td class="text-end">
+                                <a asp-controller="Staff" asp-action="Details" asp-route-id="@c.Id" class="btn btn-sm btn-outline-secondary rounded-circle me-1" title="View Details">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <form asp-action="DeleteComplaint" asp-route-id="@c.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to permanently delete complaint @c.ComplaintNumber?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle" title="Delete Record">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Purge Past Records -->
+<div class="modal fade" id="purgeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-action="PurgePastComplaints" method="post">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-header-title text-white mb-0"><i class="bi bi-trash3-fill me-2"></i> Bulk Purge Past Records</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small">
+                        This action will permanently delete past <strong>Closed</strong>, <strong>Resolved</strong>, or <strong>Rejected</strong> complaints along with their audit history and comments.
+                    </p>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Delete records older than:</label>
+                        <select name="daysOlderThan" class="form-select">
+                            <option value="0">All Past Closed Records (0 days)</option>
+                            <option value="7">Older than 7 Days</option>
+                            <option value="30" selected>Older than 30 Days</option>
+                            <option value="90">Older than 90 Days</option>
+                            <option value="180">Older than 180 Days</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirm bulk deletion of past records?');">
+                        <i class="bi bi-trash3 me-1"></i> Confirm Purge
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
