@@ -1,0 +1,111 @@
+@model IEnumerable<CampusCare.Web.ViewModels.UserManagementItem>
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-people-fill text-primary me-2"></i> User Directory</h2>
+        <p class="text-secondary small mb-0">System accounts, role permissions, and deactivation controls</p>
+    </div>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Console
+    </a>
+</div>
+
+<div class="row g-4">
+    <!-- Add Staff Form -->
+    <div class="col-lg-4">
+        <div class="card card-custom border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0"><i class="bi bi-person-plus-fill me-2 text-primary"></i> Add Staff Member</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="CreateStaff" method="post">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Full Name *</label>
+                        <input name="FullName" class="form-control" placeholder="e.g. Sarah Jenkins" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email Address *</label>
+                        <input name="Email" type="email" class="form-control" placeholder="staff@college.com" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Assigned Department *</label>
+                        <select name="DepartmentId" asp-items="ViewBag.Departments" class="form-select" required>
+                            <option value="">-- Select Department --</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">System Role *</label>
+                        <select name="Role" class="form-select" required>
+                            <option value="Staff">Department Staff</option>
+                            <option value="Manager">Department Manager</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Initial Password *</label>
+                        <input name="Password" type="password" class="form-control" value="Password123!" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100"><i class="bi bi-person-plus me-1"></i> Register Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Directory Table -->
+    <div class="col-lg-8">
+        <div class="card card-custom border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email Address</th>
+                                <th>Role</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold text-dark">@user.FullName</td>
+                                    <td class="font-monospace text-primary">@user.Email</td>
+                                    <td>
+                                        @if (user.Role == "Admin") { <span class="badge bg-danger">Admin</span> }
+                                        else if (user.Role == "Manager") { <span class="badge bg-warning text-dark">Manager</span> }
+                                        else if (user.Role == "Staff") { <span class="badge bg-info text-dark">Staff</span> }
+                                        else { <span class="badge bg-primary">Student</span> }
+                                    </td>
+                                    <td>@(user.DepartmentName ?? "-")</td>
+                                    <td>
+                                        @if (user.IsActive)
+                                        {
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">Deactivated</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <form asp-action="ToggleUserStatus" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@user.UserId" />
+                                            <button type="submit" class="btn btn-sm @(user.IsActive ? "btn-outline-danger" : "btn-outline-success")">
+                                                @(user.IsActive ? "Deactivate" : "Activate")
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
