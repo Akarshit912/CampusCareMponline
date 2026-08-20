@@ -1,0 +1,144 @@
+@model CampusCare.Web.ViewModels.StudentDashboardViewModel
+@{
+    ViewData["Title"] = "Student Complaint Dashboard";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-speedometer2 text-primary me-2"></i> Student Portal</h2>
+        <p class="text-secondary small mb-0">Track and manage your submitted campus complaints</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary-custom shadow-sm">
+        <i class="bi bi-plus-lg me-1"></i> Submit New Complaint
+    </a>
+</div>
+
+<!-- Stats Cards Row -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <div class="d-flex align-items-center">
+                <div class="rounded-3 p-3 bg-primary-subtle text-primary me-3">
+                    <i class="bi bi-folder-fill fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-semibold text-uppercase mb-1">Total Submitted</h6>
+                    <h3 class="fw-extrabold mb-0">@Model.TotalComplaints</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <div class="d-flex align-items-center">
+                <div class="rounded-3 p-3 bg-info-subtle text-info me-3">
+                    <i class="bi bi-hourglass-split fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-semibold text-uppercase mb-1">Pending Assignment</h6>
+                    <h3 class="fw-extrabold mb-0 text-info">@Model.PendingComplaints</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <div class="d-flex align-items-center">
+                <div class="rounded-3 p-3 bg-warning-subtle text-warning me-3">
+                    <i class="bi bi-gear-fill fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-semibold text-uppercase mb-1">In Progress</h6>
+                    <h3 class="fw-extrabold mb-0 text-warning">@Model.InProgressComplaints</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card card-custom p-3 border-0 bg-white shadow-sm">
+            <div class="d-flex align-items-center">
+                <div class="rounded-3 p-3 bg-success-subtle text-success me-3">
+                    <i class="bi bi-check-circle-fill fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted small fw-semibold text-uppercase mb-1">Resolved</h6>
+                    <h3 class="fw-extrabold mb-0 text-success">@Model.ResolvedComplaints</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Complaints List Table -->
+<div class="card card-custom border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="fw-bold mb-0"><i class="bi bi-card-heading me-2 text-secondary"></i> My Complaints</h5>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Complaints.Any())
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-inbox text-muted display-4"></i>
+                <p class="text-muted mt-3">You haven't submitted any complaints yet.</p>
+                <a asp-action="Create" class="btn btn-primary-custom btn-sm">Submit First Complaint</a>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Complaint ID</th>
+                            <th>Title & Location</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Assigned Dept</th>
+                            <th>Status</th>
+                            <th>Submitted Date</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var complaint in Model.Complaints)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="font-monospace fw-bold text-primary">@complaint.ComplaintNumber</span>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold text-dark">@complaint.Title</div>
+                                    <div class="small text-muted"><i class="bi bi-geo-alt me-1"></i> @complaint.Location</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">@(complaint.Category?.Name ?? "Uncategorized")</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-status badge-@complaint.Priority">@complaint.Priority</span>
+                                </td>
+                                <td>
+                                    <span class="small text-secondary fw-semibold">@(complaint.Department?.Name ?? "Pending")</span>
+                                </td>
+                                <td>
+                                    <span class="badge badge-status badge-@complaint.Status">@complaint.Status</span>
+                                    @if (complaint.IsEscalated)
+                                    {
+                                        <span class="badge bg-danger ms-1" title="Escalated to Management"><i class="bi bi-exclamation-triangle-fill"></i> Escalated</span>
+                                    }
+                                </td>
+                                <td class="small text-muted">
+                                    @complaint.CreatedAt.ToString("MMM dd, yyyy hh:mm tt")
+                                </td>
+                                <td class="text-end">
+                                    <a asp-action="Details" asp-route-id="@complaint.Id" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                        <i class="bi bi-eye me-1"></i> Track Status
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
