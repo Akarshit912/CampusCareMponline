@@ -1,0 +1,87 @@
+[
+  {
+    "ContainingType": "CampusCare.WebAPI.Controllers.ComplaintsApiController",
+    "Method": "GetComplaints",
+    "RelativePath": "api/ComplaintsApi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "departmentId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusCare.WebAPI.Controllers.ComplaintsApiController",
+    "Method": "GetComplaintDetails",
+    "RelativePath": "api/ComplaintsApi/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusCare.WebAPI.Controllers.ComplaintsApiController",
+    "Method": "DeleteComplaint",
+    "RelativePath": "api/ComplaintsApi/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusCare.WebAPI.Controllers.ComplaintsApiController",
+    "Method": "TriggerEscalationCheck",
+    "RelativePath": "api/ComplaintsApi/escalate-overdue",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "overdueHours",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CampusCare.WebAPI.Controllers.ComplaintsApiController",
+    "Method": "ReceiveN8nWebhookCallback",
+    "RelativePath": "api/ComplaintsApi/n8n/webhook-callback",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "payload",
+        "Type": "System.Object",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

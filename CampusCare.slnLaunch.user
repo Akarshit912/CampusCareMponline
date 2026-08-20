@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "src\\CampusCare.Mvc\\CampusCare.Mvc.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "src\\CampusCare.WebAPI\\CampusCare.WebAPI.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "tests\\CampusCare.Tests\\CampusCare.Tests.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

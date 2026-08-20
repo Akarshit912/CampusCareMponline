@@ -1,0 +1,17 @@
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\bin\Debug\net10.0\CampusCare.Infrastructure.deps.json
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\bin\Debug\net10.0\CampusCare.Infrastructure.runtimeconfig.json
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\bin\Debug\net10.0\CampusCare.Infrastructure.dll
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\bin\Debug\net10.0\CampusCare.Infrastructure.pdb
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\bin\Debug\net10.0\CampusCare.Core.dll
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\bin\Debug\net10.0\CampusCare.Core.pdb
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCare.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCare.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCare.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCare.Infrastructure.AssemblyInfo.cs
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCare.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCa.E04A446B.Up2Date
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCare.Infrastructure.dll
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\refint\CampusCare.Infrastructure.dll
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCare.Infrastructure.pdb
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\CampusCare.Infrastructure.genruntimeconfig.cache
+C:\Users\LENOVO\.gemini\antigravity\scratch\CampusCare\src\CampusCare.Infrastructure\obj\Debug\net10.0\ref\CampusCare.Infrastructure.dll

@@ -1,0 +1,59 @@
+@model CampusCare.Web.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Log In";
+}
+
+<div class="row justify-content-center my-5">
+    <div class="col-md-5 col-lg-4">
+        <div class="card auth-card border-0 p-4">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="bi bi-shield-lock text-primary display-4"></i>
+                    <h3 class="fw-bold mt-2 mb-1">Welcome Back</h3>
+                    <p class="text-muted small">Sign in to access your CampusCare portal</p>
+                </div>
+
+                <form asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger p-2 small" role="alert"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="name@college.com" />
+                        <label asp-for="Email"><i class="bi bi-envelope me-1"></i> Email Address</label>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Password" class="form-control" placeholder="Password" />
+                        <label asp-for="Password"><i class="bi bi-key me-1"></i> Password</label>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label text-secondary small">Remember Me</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-custom w-100 py-2 fs-6 shadow-sm">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Log In
+                    </button>
+                </form>
+
+                <hr class="my-4" />
+
+                <div class="bg-light p-3 rounded-3 text-start small">
+                    <p class="fw-bold mb-2 text-dark"><i class="bi bi-info-circle-fill text-info me-1"></i> Seed Accounts Demo Login:</p>
+                    <ul class="list-unstyled mb-0 text-muted" style="font-size: 0.85rem;">
+                        <li><code>admin@college.com</code> / <code>Password123!</code> (Admin)</li>
+                        <li><code>manager@college.com</code> / <code>Password123!</code> (IT Manager)</li>
+                        <li><code>staff1@college.com</code> / <code>Password123!</code> (IT Staff)</li>
+                        <li><code>student1@college.com</code> / <code>Password123!</code> (Student)</li>
+                    </ul>
+                </div>
+
+                <div class="text-center mt-3">
+                    <p class="small text-muted mb-0">Don't have an account? <a asp-action="Register" class="text-primary fw-semibold text-decoration-none">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

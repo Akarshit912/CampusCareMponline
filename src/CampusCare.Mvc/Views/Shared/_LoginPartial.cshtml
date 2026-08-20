@@ -1,0 +1,40 @@
+@using Microsoft.AspNetCore.Identity
+@using CampusCare.Core.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav ms-auto align-items-center">
+@if (SignInManager.IsSignedIn(User))
+{
+    var currentUser = await UserManager.GetUserAsync(User);
+    <li class="nav-item me-3 text-light">
+        <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+            <i class="bi bi-person-circle me-1"></i> @(currentUser?.FullName ?? User.Identity?.Name)
+            @if (User.IsInRole("Admin")) { <span class="badge bg-danger ms-1">Admin</span> }
+            else if (User.IsInRole("Manager")) { <span class="badge bg-warning text-dark ms-1">Manager</span> }
+            else if (User.IsInRole("Staff")) { <span class="badge bg-info text-dark ms-1">Staff</span> }
+            else { <span class="badge bg-primary ms-1">Student</span> }
+        </span>
+    </li>
+    <li class="nav-item">
+        <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                <i class="bi bi-box-arrow-right me-1"></i> Logout
+            </button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-light me-2" asp-controller="Account" asp-action="Login">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="btn btn-info text-dark font-weight-bold rounded-pill px-3" asp-controller="Account" asp-action="Register">
+            <i class="bi bi-person-plus me-1"></i> Register
+        </a>
+    </li>
+}
+</ul>
