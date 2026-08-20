@@ -1,8 +1,8 @@
-namespace CampusCare.Mvc.Models;
-
-public class ErrorViewModel
+namespace CampusCare.Web.ViewModels
 {
-    public string? RequestId { get; set; }
-
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
 }
