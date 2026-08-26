@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CampusCare.Core/CampusCare.Core.csproj" />
+    <Project Path="src/CampusCare.Infrastructure/CampusCare.Infrastructure.csproj" />
+    <Project Path="src/CampusCare.Mvc/CampusCare.Mvc.csproj" />
+    <Project Path="src/CampusCare.WebAPI/CampusCare.WebAPI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <File Path="tests/CampusCare.Tests/UnitTest1.cs" />
+    <Project Path="tests/CampusCare.Tests/CampusCare.Tests.csproj" />
+  </Folder>
+</Solution>

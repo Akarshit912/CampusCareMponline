@@ -1,0 +1,6 @@
+@CampusCare.WebAPI_HostAddress = http://localhost:5174
+
+GET {{CampusCare.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

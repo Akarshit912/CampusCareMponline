@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="row justify-content-center my-5 text-center">
+    <div class="col-md-6">
+        <div class="card card-custom p-5 border-0 shadow-lg">
+            <div class="card-body">
+                <i class="bi bi-shield-x text-danger display-1 mb-3"></i>
+                <h2 class="fw-bold text-danger">403 - Access Denied</h2>
+                <p class="text-secondary lead mt-3">You do not have permission to access this resource or administrative area.</p>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary-custom mt-3">
+                    <i class="bi bi-house-door me-1"></i> Return to Homepage
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

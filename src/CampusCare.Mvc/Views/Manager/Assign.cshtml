@@ -1,0 +1,69 @@
+@model CampusCare.Web.ViewModels.AssignStaffViewModel
+@{
+    var c = ViewBag.Complaint as CampusCare.Core.Entities.Complaint;
+    ViewData["Title"] = $"Assign Staff to {Model.ComplaintNumber}";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card card-custom border-0 shadow-lg p-3">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="rounded-circle p-3 bg-warning-subtle text-warning me-3">
+                        <i class="bi bi-person-plus-fill fs-3"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-0">Assign Staff Member</h3>
+                        <p class="text-secondary small mb-0">Assign complaint <span class="font-monospace text-primary fw-bold">@Model.ComplaintNumber</span> to responsible staff</p>
+                    </div>
+                </div>
+
+                @if (c != null)
+                {
+                    <div class="bg-light p-3 rounded-3 border mb-4">
+                        <h6 class="fw-bold text-dark">@c.Title</h6>
+                        <p class="small text-secondary mb-1"><strong>Student:</strong> @(c.Student?.FullName ?? "Student") | <strong>Location:</strong> @c.Location</p>
+                        <p class="small text-dark mb-0"><strong>Description:</strong> @c.Description</p>
+                    </div>
+                }
+
+                <form asp-action="Assign" method="post">
+                    <input type="hidden" asp-for="ComplaintId" />
+                    <input type="hidden" asp-for="ComplaintNumber" />
+                    <input type="hidden" asp-for="Title" />
+
+                    <div class="mb-3">
+                        <label asp-for="SelectedStaffId" class="form-label fw-semibold">Responsible Staff Member *</label>
+                        <select asp-for="SelectedStaffId" asp-items="ViewBag.StaffList" class="form-select">
+                            <option value="">-- Select Department Staff Member --</option>
+                        </select>
+                        <span asp-validation-for="SelectedStaffId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Priority" class="form-label fw-semibold">Priority Level</label>
+                            <select asp-for="Priority" asp-items="Html.GetEnumSelectList<CampusCare.Core.Enums.PriorityLevel>()" class="form-select"></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="CategoryId" class="form-label fw-semibold">Category</label>
+                            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select"></select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Note" class="form-label fw-semibold">Manager Directive / Instructions</label>
+                        <textarea asp-for="Note" class="form-control" rows="2" placeholder="Optional directives for the assigned staff member..."></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-warning text-dark font-weight-bold px-4">
+                            <i class="bi bi-check-circle-fill me-1"></i> Confirm Staff Assignment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
